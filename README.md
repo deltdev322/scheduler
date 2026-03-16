@@ -2,6 +2,8 @@
 A lightweight frame-budget coroutine scheduler for Roblox.
 This module allows you to run large workloads across multiple frames without freezing the game by enforcing a strict execution time budget per frame.
 
+--------------------------------------------------------------------------------
+
 # The scheduler is designed for CPU-heavy systems such as:
 1. procedural generation
 2. large data processing
@@ -9,6 +11,8 @@ This module allows you to run large workloads across multiple frames without fre
 4. ECS systems
 5. pathfinding batches
 6. chunk streaming
+
+--------------------------------------------------------------------------------
 
 # Why use this?
 Running large loops in a single frame can cause frame drops or server stalls.
@@ -31,6 +35,8 @@ end)
 
 It uses ~85% of the frame duration and leaves headroom for the rest of the game.
 
+--------------------------------------------------------------------------------
+
 # Ring queue: O(1) vs O(n)
 When removing the first element, Luau must shift every element in the array, this means every element is moved in memory.
 For large queues this becomes expensive.
@@ -39,10 +45,19 @@ For large queues this becomes expensive.
 This scheduler uses a ring queue instead. Instead of shifting memory, it tracks two indices: head and tail.
 {A, B, C, D} -> {nil, B, C, D}; head = 2; tail = 4
 
+--------------------------------------------------------------------------------
+
 # Benchmark
 A simple benchmark was run comparing:
 baseline execution (single-frame workload)
 scheduler execution (frame-budgeted tasks)
+
+Executing:
+```lua
+local function heavy(i)
+	return math.sqrt(i) * math.sin(i)
+end
+```
 
 # Baseline (no scheduler)
 ```

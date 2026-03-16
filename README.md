@@ -79,9 +79,9 @@ Min frame time: 0.0001 s
 Work is distributed across frames using the scheduler's adaptive frame budget.
 
 # That means:
-50% lower average frame time
-Heavy tasks are spread across 3x more frames, preventing sudden spikes.
-Instead of blocking frames with large bursts of work, the scheduler maintains a consistent execution budget.
+1. 50% lower average frame time
+2. Heavy tasks are spread across 3x more frames, preventing sudden spikes.
+3. Instead of blocking frames with large bursts of work, the scheduler maintains a consistent execution budget.
 
 --------------------------------------------------------------------------------
 

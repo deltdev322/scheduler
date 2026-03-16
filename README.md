@@ -39,6 +39,32 @@ For large queues this becomes expensive.
 This scheduler uses a ring queue instead. Instead of shifting memory, it tracks two indices: head and tail.
 {A, B, C, D} -> {nil, B, C, D}; head = 2; tail = 4
 
+# Benchmark
+A simple benchmark was run comparing:
+baseline execution (single-frame workload)
+scheduler execution (frame-budgeted tasks)
+
+# Baseline (no scheduler)
+```
+Total time: 0.180 s
+Frames used: 21
+Average frame time: 0.0083 s
+Max frame time: 0.0083 s
+```
+All work is executed in large chunks, causing long frame spikes.
+
+# With Scheduler
+```
+Total time: 0.256 s
+Frames used: 61
+Average frame time: 0.0041 s
+Max frame time: 0.0065 s
+Min frame time: 0.0001 s
+```
+Work is distributed across frames using the scheduler's adaptive frame budget.
+
+--------------------------------------------------------------------------------
+
 # Example
 Chunk generation example:
 ```lua
@@ -57,4 +83,3 @@ RunService.Heartbeat:Connect(function()
     scheduler:Step()
 end)
 ```
-
